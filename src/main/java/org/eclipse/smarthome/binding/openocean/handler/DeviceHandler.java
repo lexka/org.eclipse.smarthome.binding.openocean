@@ -187,12 +187,12 @@ public class DeviceHandler {
             String jsonDevice = getDeviceIdProfileJson(deviceId);
             ObjectMapper mapper = new ObjectMapper();
             EoGwDevice eoGwDevice = mapper.readValue(jsonDevice, EoGwDevice.class);
-            System.out.println("device.getProfile : " + eoGwDevice.getDevice().getEep());
+            // System.out.println("device.getProfile : " + eoGwDevice.getDevice().getEep());
             String eep = "DefaufltDevice";
             if (eoGwDevice.getDevice().getEep() != null) {
                 eep = eoGwDevice.getDevice().getEep();
             }
-
+            return eep;
         } catch (Exception ex) {
             System.out.println("Class: DeviceHandler. Method: getProfileByDeviceId. Error: " + ex);
         }

@@ -29,7 +29,7 @@ public class EnoceanBridgeHandler extends BaseBridgeHandler {
     public final static Set<ThingTypeUID> SUPPORTED_THING_TYPES = Collections
             .singleton(openoceanBindingConstants.THING_TYPE_BRIDGE);
 
-    private static final String DEFAULT_USERNAME = "user";
+    private static final String DEFAULT_USERNAME = "admin";
     private static final int POLLING_FREQUENCY = 10; // in seconds
 
     private boolean lastEnoceanBridgeConnectionState = false;
@@ -78,7 +78,7 @@ public class EnoceanBridgeHandler extends BaseBridgeHandler {
         }
 
         if (getConfig().get(openoceanBindingConstants.HOST) == null) {
-            getConfig().put(openoceanBindingConstants.HOST, "172.28.28.150:8080");
+            getConfig().put(openoceanBindingConstants.HOST, openoceanBindingConstants.HOST);
             System.out.println("getConfig().get(HOST): " + getConfig().get(openoceanBindingConstants.HOST));
         }
 

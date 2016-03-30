@@ -26,9 +26,19 @@ public class Functions /* extends Values */ {
 
     private String ValueKey = null;
 
+    private String defaultValue = null;
+
     private String meaning = null;
 
     private ArrayList<Values> values = null;
+
+    public String getDefaultValue() {
+        return defaultValue;
+    }
+
+    public void setDefaultValue(String defaultValue) {
+        this.defaultValue = defaultValue;
+    }
 
     public String getDescription() {
         return description;

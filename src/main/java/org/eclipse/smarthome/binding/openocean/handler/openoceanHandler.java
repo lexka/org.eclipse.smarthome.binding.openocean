@@ -85,7 +85,6 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
         ObjectMapper mapper = new ObjectMapper();
         SaveThingUID savethin = new SaveThingUID();
         try {
-
             File datei = new File(openoceanBindingConstants.fileName);
             while (!datei.exists()) {
                 datei = new File(openoceanBindingConstants.fileName);
@@ -244,6 +243,8 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
                             /**
                              * remove Process
                              */
+                            System.out.println(
+                                    "Class: OpenoceanHandler. Method: EventFromGateway. One device will be deleted");
                             if (eoGwDevice.getDevice().getDeleted() == true) {
                                 String devId = eoGwDevice.getDevice().getDeviceId();
                                 onDeviceRemoveOnOpenhabUi(devId);
@@ -266,20 +267,20 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
 
                                 for (int i = 0; i < eoProfile.getProfile().getFunctionGroups().get(0).getFunctions()
                                         .size(); i++) {
-                                    TransmitModes element = new TransmitModes();
+                                    TransmitModes elements = new TransmitModes();
 
-                                    element.setKey(eoProfile.getProfile().getFunctionGroups().get(0).getFunctions()
+                                    elements.setKey(eoProfile.getProfile().getFunctionGroups().get(0).getFunctions()
                                             .get(i).getKey());
 
-                                    element.setTransmitOnConnect(eoProfile.getProfile().getFunctionGroups().get(0)
+                                    elements.setTransmitOnConnect(eoProfile.getProfile().getFunctionGroups().get(0)
                                             .getFunctions().get(i).isTransmitOnConnect());
 
-                                    element.setTransmitOnDuplicate(eoProfile.getProfile().getFunctionGroups().get(0)
+                                    elements.setTransmitOnDuplicate(eoProfile.getProfile().getFunctionGroups().get(0)
                                             .getFunctions().get(i).isTransmitOnDuplicate());
 
-                                    element.setTransmitOnEvent(eoProfile.getProfile().getFunctionGroups().get(0)
+                                    elements.setTransmitOnEvent(eoProfile.getProfile().getFunctionGroups().get(0)
                                             .getFunctions().get(i).isTransmitOnEvent());
-                                    transmitModes.add(element);
+                                    transmitModes.add(elements);
                                 }
                                 eoGwDevice.getDevice().setTransmitModes(transmitModes);
                                 eoGwDevice.getDevice().setFriendlyId("Device_" + eoGwDevice.getDevice().getDeviceId());
@@ -295,10 +296,6 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
                                         eoGwDevice.getDevice().getFriendlyId()));
                                 addThingUIDToJsonDatei(eoGwDevice.getDevice().getDeviceId(),
                                         eoGwDevice.getDevice().getFriendlyId());
-                                        // dispose();
-                                        //
-                                        // initialize();
-
                                 /**
                                  * create the channelId
                                  */
@@ -324,7 +321,8 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
                                     System.out.println(
                                             "Class: OpenoceanHandler. Methode: eventFromGateway. Info : No fonction found.");
                                 }
-
+                                System.out.println("Class: OpenoceanHandler. Method: EventFromGateway. The device "
+                                        + eoGwDevice.getDevice().getDeviceId() + " has been added");
                             }
                         }
                     }
@@ -348,9 +346,9 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
                                     if (channe == null) {
                                         channe = "default";
                                     }
+                                    System.out.println("device Id: " + dev.getDeviceId() + " Channel: " + channe);
                                     eepParserChoose(eep, dev.getDeviceId(), deviceState, channe);
                                 }
-
                             }
                         }
                         jsonNode = "";
@@ -360,17 +358,19 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
                      */
                     if ((eoGwDevices.getTelegram() != null)) {
                         String deviceState;
-                        if (eoGwDevices.getTelegram().getFunctions().length == 0) {
-                            deviceState = "0";
-                        } else {
-                            deviceState = eoGwDevices.getTelegram().getFunctions()[0].getValue();
-                        }
-                        if (deviceState != null) {
-                            DevicesIdWithProfile.statesofDevice.put(eoGwDevices.getTelegram().getDeviceId(),
-                                    deviceState);
-                            if (EnoceanChannelUID.channelUID.containsKey(eoGwDevices.getTelegram().getDeviceId())) {
-                                eepParserChoose(eep, eoGwDevices.getTelegram().getDeviceId(), deviceState,
-                                        EnoceanChannelUID.channelUID.get(eoGwDevices.getTelegram().getDeviceId()));
+                        if ((eoGwDevices.getTelegram().getFunctions() != null)) {
+                            if (eoGwDevices.getTelegram().getFunctions().length == 0) {
+                                deviceState = "0";
+                            } else {
+                                deviceState = eoGwDevices.getTelegram().getFunctions()[0].getValue();
+                            }
+                            if (deviceState != null) {
+                                DevicesIdWithProfile.statesofDevice.put(eoGwDevices.getTelegram().getDeviceId(),
+                                        deviceState);
+                                if (EnoceanChannelUID.channelUID.containsKey(eoGwDevices.getTelegram().getDeviceId())) {
+                                    eepParserChoose(eep, eoGwDevices.getTelegram().getDeviceId(), deviceState,
+                                            EnoceanChannelUID.channelUID.get(eoGwDevices.getTelegram().getDeviceId()));
+                                }
                             }
                         }
                         jsonNode = "";
@@ -405,6 +405,7 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
     }
 
     private void eepParserChoose(String eep, String deviceId, String deviceState, String channelID) {
+        System.out.println("Device ID: " + deviceId + ". channelID: " + channelID + ". deviceState : " + deviceState);
         if (deviceId.equalsIgnoreCase("0193EFFD")) {
             System.out.println("channelID: " + channelID + ". deviceState : " + deviceState);
             if (deviceState.equalsIgnoreCase("0")) {
@@ -512,7 +513,7 @@ public class openoceanHandler extends BaseThingHandler implements Runnable, Devi
             deviceInitialize(getThing());
             ThingStatusInfo statusInfo = getBridge().getStatusInfo();
             updateStatus(statusInfo.getStatus(), statusInfo.getStatusDetail(), statusInfo.getDescription());
-            // deviceInitialize(getThing());
+
             long endTime = System.currentTimeMillis();
             System.out.println(
                     "Total elapsed time in execution of method initialize() is :" + (endTime - startTime) / 1000);

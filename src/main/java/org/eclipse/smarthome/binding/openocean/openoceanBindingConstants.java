@@ -40,6 +40,7 @@ public class openoceanBindingConstants {
     // Bridge config properties
     // public static final String HOST = "http://172.28.28.150";
     public static final String HOST = "http://172.28.28.103";
+    // public static final String HOST = "http://172.28.28.71";
     // public static final String HOST = "http://192.168.178.29";
     public static final String PORT = "8080";
     // public static final String IPADRESS = "192.168.178.29:8080";

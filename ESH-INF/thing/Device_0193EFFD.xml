@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<thing:thing-descriptions xmlns:thing="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bindingId="openocean" xsi:schemaLocation="http://eclipse.org/smarthome/schemas/thing-description/v1.0.0 http://eclipse.org/smarthome/schemas/thing-description-1.0.0.xsd">
+  <!--Sample Thing Type-->
+  <thing-type id="Device_0193EFFD">
+    <supported-bridge-type-refs>
+      <bridge-type-ref id="enoceanBridge"/>
+    </supported-bridge-type-refs>
+    <label>New Thing</label>
+    <description>This is a new Thing.</description>
+    <channels>
+      <channel id="dimValue" typeId="dimValue"/>
+      <channel id="rampingMode" typeId="rampingMode"/>
+    </channels>
+  </thing-type>
+  <!--Sample channel Type-->
+  <channel-type id="dimValue">
+    <item-type>String</item-type>
+    <label>String</label>
+    <description>this is a desciption</description>
+    <category>this is a category</category>
+  </channel-type>
+  <channel-type id="rampingMode">
+    <item-type>String</item-type>
+    <label>String</label>
+    <description>this is a desciption</description>
+    <category>this is a category</category>
+  </channel-type>
+</thing:thing-descriptions>

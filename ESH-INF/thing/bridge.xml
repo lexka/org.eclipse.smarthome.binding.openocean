@@ -18,20 +18,7 @@
                 <label>Network Address</label>
                 <description>Network address of the EnOcean bridge.</description>
                 <required>false</required>
-            </parameter>
-            <parameter name="userName" type="text">
-                <context>password</context>
-                <label>user</label>
-                <description>
-                    Name of a registered Enocean bridge user, that allows to access the API.
-                </description>
-                <required>false</required>
-            </parameter>
-            <parameter name="serialNumber" type="text">
-                <label>Serial Number</label>
-                <description>Serial number of the EnOcean bridge.</description>
-                <required>false</required>
-            </parameter>
+            </parameter>            
         </config-description>
     </bridge-type>
 
